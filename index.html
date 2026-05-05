@@ -1,506 +1,1039 @@
-Index · HTML
-Copy
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgentCompany</title>
+<title>AgentCompany — Your Digital Workforce</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:      #08080f;
-  --s1:      #0e0e18;
-  --s2:      #141422;
-  --s3:      #1c1c2e;
-  --b1:      rgba(255,255,255,0.055);
-  --b2:      rgba(255,255,255,0.10);
-  --b3:      rgba(255,255,255,0.18);
-  --purple:  #7c5cfc;
+  --bg:      #07070d;
+  --bg1:     #0d0d18;
+  --bg2:     #141426;
+  --bg3:     #1c1c32;
+  --bg4:     #25253f;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --purple:  #8b5cf6;
   --purple-l:#a78bfa;
-  --purple-d:rgba(124,92,252,0.12);
-  --purple-g:linear-gradient(135deg,#7c5cfc,#a78bfa);
-  --green:   #34d399;
-  --amber:   #fbbf24;
-  --red:     #f87171;
+  --purple-d:rgba(139,92,246,0.12);
+  --purple-g:linear-gradient(135deg,#8b5cf6 0%,#a78bfa 100%);
+  --teal:    #2dd4bf;
   --blue:    #60a5fa;
-  --text:    #dddaf0;
-  --dim:     #7a7896;
-  --muted:   #45445a;
-  --sans:    'Inter', sans-serif;
+  --green:   #4ade80;
+  --text:    #e6e3f5;
+  --dim:     #9290b0;
+  --muted:   #58567a;
   --mono:    'JetBrains Mono', monospace;
-  --r:       8px;
-  --r-lg:    12px;
+  --sans:    'Barlow', sans-serif;
+  --cond:    'Barlow Condensed', sans-serif;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13.5px}
- 
-/* Layout */
-.app{display:grid;grid-template-columns:220px 1fr;height:100vh}
- 
-/* Sidebar */
-.sidebar{background:var(--s1);border-right:1px solid var(--b1);display:flex;flex-direction:column;overflow:hidden}
-.sb-logo{display:flex;align-items:center;gap:10px;padding:18px 16px 14px;border-bottom:1px solid var(--b1)}
-.sb-logo-mark{width:28px;height:28px;background:var(--purple-g);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.sb-logo-text{font-weight:600;font-size:14px;letter-spacing:-0.2px;color:var(--text)}
-.sb-logo-text span{font-weight:300;color:var(--dim)}
-.sb-nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
-.sb-section{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);padding:14px 8px 6px}
-.nav-btn{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r);border:none;background:none;color:var(--dim);font-family:var(--sans);font-size:13.5px;font-weight:400;cursor:pointer;width:100%;text-align:left;transition:background .12s,color .12s;position:relative}
-.nav-btn:hover{background:var(--s2);color:var(--text)}
-.nav-btn.active{background:var(--purple-d);color:var(--purple-l);font-weight:500}
-.nav-btn.active::before{content:'';position:absolute;left:0;top:25%;bottom:25%;width:2px;background:var(--purple);border-radius:0 2px 2px 0}
-.nav-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
-.sb-sessions{padding:4px 0}
-.session-item{padding:7px 10px;border-radius:var(--r);cursor:pointer;font-size:12.5px;color:var(--dim);transition:background .1s,color .1s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.session-item:hover{background:var(--s2);color:var(--text)}
-.session-item.active{background:var(--s2);color:var(--text)}
-.session-new{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r);cursor:pointer;font-size:12.5px;color:var(--muted);border:1px dashed var(--b2);transition:all .12s;margin:4px 0}
-.session-new:hover{border-color:var(--b3);color:var(--dim);background:var(--s2)}
-.sb-footer{border-top:1px solid var(--b1);padding:12px 10px;display:flex;align-items:center;gap:10px}
-.user-avatar{width:28px;height:28px;border-radius:50%;background:var(--purple-d);border:1px solid rgba(124,92,252,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--purple-l);flex-shrink:0}
-.user-info{flex:1;overflow:hidden}
-.user-name{font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.user-plan{font-size:10.5px;color:var(--muted);font-family:var(--mono)}
-.logout-btn{width:26px;height:26px;border-radius:6px;background:none;border:1px solid var(--b1);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .12s;flex-shrink:0}
-.logout-btn:hover{background:rgba(248,113,113,0.1);border-color:rgba(248,113,113,0.3);color:var(--red)}
- 
-/* Main */
-main{display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
-.topbar{height:48px;border-bottom:1px solid var(--b1);display:flex;align-items:center;padding:0 20px;gap:10px;flex-shrink:0}
-.topbar-title{font-weight:500;font-size:14px;color:var(--text)}
-.topbar-sep{color:var(--muted)}
-.topbar-sub{color:var(--dim);font-size:12.5px}
-.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.status-dot{width:7px;height:7px;border-radius:50%;background:var(--muted)}
-.status-dot.live{background:var(--green);animation:livepulse 2s infinite}
-@keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,0.4)}70%{box-shadow:0 0 0 6px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
-.status-label{font-size:11.5px;color:var(--dim);font-family:var(--mono)}
- 
-/* Panels */
-.panel{display:none;flex:1;overflow:hidden}
-.panel.active{display:flex;flex-direction:column}
- 
-/* Chat */
-.chat-messages{flex:1;overflow-y:auto;padding:20px 0;display:flex;flex-direction:column;gap:0}
-.msg-group{display:flex;gap:12px;padding:6px 24px;transition:background .1s}
-.msg-group:hover{background:rgba(255,255,255,0.015)}
-.msg-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;margin-top:2px}
-.av-ceo{background:var(--purple-d);color:var(--purple-l);border:1px solid rgba(124,92,252,0.25)}
-.av-mgr{background:rgba(52,211,153,0.1);color:var(--green);border:1px solid rgba(52,211,153,0.2)}
-.av-wkr{background:rgba(96,165,250,0.1);color:var(--blue);border:1px solid rgba(96,165,250,0.2)}
-.av-usr{background:var(--s3);color:var(--text);border:1px solid var(--b2)}
-.msg-body{flex:1;min-width:0}
-.msg-meta{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
-.msg-name{font-weight:500;font-size:13px}
-.msg-time{font-size:11px;color:var(--muted);font-family:var(--mono)}
-.msg-text{font-size:13.5px;line-height:1.65;color:var(--text);font-weight:300;word-break:break-word}
-.msg-text strong{font-weight:500}
-.msg-text code{font-family:var(--mono);font-size:12px;background:var(--s2);border:1px solid var(--b1);padding:1px 5px;border-radius:4px}
-.typing-dots{display:inline-flex;gap:4px;align-items:center;padding:2px 0}
-.typing-dots span{width:5px;height:5px;background:var(--purple);border-radius:50%;animation:tdot 1.3s infinite;opacity:.4}
-.typing-dots span:nth-child(2){animation-delay:.15s}
-.typing-dots span:nth-child(3){animation-delay:.3s}
-@keyframes tdot{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
-.chat-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted);padding:2rem}
-.chat-empty-icon{width:52px;height:52px;border-radius:14px;background:var(--purple-d);border:1px solid rgba(124,92,252,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:4px}
-.chat-empty h3{font-size:16px;font-weight:500;color:var(--dim)}
-.chat-empty p{font-size:13px;text-align:center;line-height:1.6;max-width:320px}
-.composer{border-top:1px solid var(--b1);padding:14px 20px;flex-shrink:0}
-.composer-inner{background:var(--s1);border:1px solid var(--b2);border-radius:var(--r-lg);display:flex;align-items:flex-end;gap:8px;padding:10px 12px;transition:border-color .15s}
-.composer-inner:focus-within{border-color:rgba(124,92,252,0.4)}
-.composer-textarea{flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--sans);font-size:13.5px;font-weight:300;line-height:1.5;resize:none;max-height:160px;min-height:22px;overflow-y:auto}
-.composer-textarea::placeholder{color:var(--muted)}
-.composer-send{width:32px;height:32px;border-radius:7px;background:var(--purple-g);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .12s,transform .12s;color:#fff;font-size:16px;line-height:1}
-.composer-send:hover{opacity:.88}
-.composer-send:active{transform:scale(.95)}
-.composer-send:disabled{opacity:.3;cursor:not-allowed}
-.composer-hint{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:7px;padding:0 2px}
- 
-/* Files */
-.files-layout{flex:1;display:grid;grid-template-columns:300px 1fr;overflow:hidden}
-.files-list{border-right:1px solid var(--b1);display:flex;flex-direction:column;overflow:hidden}
-.files-toolbar{padding:12px 14px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:8px;flex-shrink:0}
-.files-search{flex:1;background:var(--s2);border:1px solid var(--b1);border-radius:6px;padding:6px 10px;color:var(--text);font-family:var(--sans);font-size:12.5px;outline:none;transition:border-color .15s}
-.files-search:focus{border-color:var(--b2)}
-.files-search::placeholder{color:var(--muted)}
-.files-scroll{flex:1;overflow-y:auto;padding:8px}
-.file-group-label{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);padding:10px 8px 5px}
-.file-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r);cursor:pointer;transition:background .1s;border:1px solid transparent}
-.file-item:hover{background:var(--s1)}
-.file-item.active{background:var(--purple-d);border-color:rgba(124,92,252,0.2)}
-.file-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;border:1px solid var(--b1)}
-.fi-web{background:rgba(96,165,250,0.08)}
-.fi-py{background:rgba(52,211,153,0.08)}
-.fi-txt{background:rgba(251,191,36,0.08)}
-.fi-img{background:rgba(248,113,113,0.08)}
-.file-info{flex:1;min-width:0}
-.file-name{font-size:13px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.file-meta{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px}
-.file-badge{font-size:9.5px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;flex-shrink:0}
-.fb-live{background:rgba(52,211,153,0.12);color:var(--green);border:1px solid rgba(52,211,153,0.2)}
-.fb-draft{background:var(--s3);color:var(--dim);border:1px solid var(--b1)}
-.fb-done{background:rgba(124,92,252,0.1);color:var(--purple-l);border:1px solid rgba(124,92,252,0.2)}
-.preview-pane{display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
-.preview-topbar{height:44px;border-bottom:1px solid var(--b1);padding:0 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
-.preview-dots{display:flex;gap:5px}
-.preview-dots span{width:9px;height:9px;border-radius:50%}
-.pd-r{background:rgba(248,113,113,0.5)}
-.pd-y{background:rgba(251,191,36,0.5)}
-.pd-g{background:rgba(52,211,153,0.5)}
-.preview-url{flex:1;background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:4px 10px;font-family:var(--mono);font-size:11.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.preview-action{height:28px;padding:0 10px;border-radius:6px;background:var(--s2);border:1px solid var(--b1);color:var(--dim);font-size:11.5px;font-family:var(--sans);cursor:pointer;transition:all .12s;white-space:nowrap}
-.preview-action:hover{background:var(--s3);color:var(--text);border-color:var(--b2)}
-.preview-body{flex:1;overflow:hidden;position:relative}
-.preview-iframe{width:100%;height:100%;border:none;background:#fff}
-.preview-code{width:100%;height:100%;overflow:auto;padding:20px 24px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--dim);white-space:pre}
-.preview-code .kw{color:var(--purple-l)}
-.preview-code .st{color:var(--green)}
-.preview-code .cm{color:var(--muted)}
-.preview-code .fn{color:var(--blue)}
-.preview-code .nm{color:var(--amber)}
-.preview-empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted)}
-.preview-empty-icon{font-size:2.5rem;opacity:.25}
- 
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--s3);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:var(--b2)}
- 
-#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(60px);background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);padding:9px 18px;font-size:12.5px;color:var(--text);z-index:999;transition:transform .25s;pointer-events:none;white-space:nowrap}
-#toast.show{transform:translateX(-50%) translateY(0)}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Grid bg */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
+  background-size: 52px 52px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glow orb */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 600px;
+  background: radial-gradient(ellipse, rgba(139,92,246,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 56px;
+  background: rgba(7,7,13,0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.logo-mark {
+  background: var(--purple-g);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 24px;
+}
+
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+
+.nav-link {
+  font-family: var(--cond);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color .15s;
+}
+.nav-link:hover { color: var(--text); }
+
+.btn-nav {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--purple-g);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: filter .15s;
+}
+.btn-nav:hover { filter: brightness(1.12); }
+
+/* HERO */
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 7rem 2rem 5rem;
+}
+
+.badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--purple-l);
+  background: var(--purple-d);
+  border: 1px solid rgba(139,92,246,0.25);
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.badge-dot {
+  width: 6px; height: 6px;
+  background: var(--purple-l);
+  border-radius: 50%;
+  animation: bpulse 2s infinite;
+}
+@keyframes bpulse {
+  0%,100% { opacity:1; } 50% { opacity:.3; }
+}
+
+h1 {
+  font-family: var(--cond);
+  font-weight: 800;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1.0;
+  letter-spacing: -1px;
+  max-width: 900px;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+h1 .grad {
+  background: var(--purple-g);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--dim);
+  max-width: 560px;
+  margin-bottom: 3rem;
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+
+.btn-primary {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  background: var(--purple-g);
+  color: #fff;
+  border: none;
+  padding: 0.85rem 2.2rem;
+  border-radius: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .2s;
+}
+.btn-primary:hover { filter: brightness(1.12); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(139,92,246,0.35); }
+
+.btn-ghost {
+  font-family: var(--cond);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border: 1px solid var(--border2);
+  color: var(--dim);
+  padding: 0.85rem 2.2rem;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: all .2s;
+}
+.btn-ghost:hover { border-color: rgba(139,92,246,0.4); color: var(--purple-l); }
+
+/* Dashboard preview */
+.preview-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border2);
+  box-shadow: 0 0 80px rgba(139,92,246,0.15), 0 40px 80px rgba(0,0,0,0.5);
+}
+
+.preview-bar {
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.preview-dots { display: flex; gap: 6px; }
+.preview-dots span {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.d1 { background: #f87171; }
+.d2 { background: #fbbf24; }
+.d3 { background: #4ade80; }
+.preview-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0 auto;
+}
+.preview-body {
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  height: 360px;
+}
+.preview-nav {
+  background: var(--bg1);
+  border-right: 1px solid var(--border);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pnav-group {
+  font-family: var(--cond);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 8px 4px;
+}
+.pnav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: 5px;
+  font-family: var(--cond);
+  font-size: 12px;
+  color: var(--dim);
+}
+.pnav-item.active { background: var(--purple-d); color: var(--purple); }
+.preview-main {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+.pmsg {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.pmsg-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-family: var(--mono);
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.av-ceo { background: var(--purple-d); color: var(--purple); border: 1px solid rgba(139,92,246,0.3); }
+.av-mgr { background: rgba(45,212,191,0.1); color: var(--teal); border: 1px solid rgba(45,212,191,0.25); }
+.av-usr { background: rgba(230,227,245,0.08); color: var(--text); border: 1px solid var(--border2); }
+.pmsg-body { flex: 1; }
+.pmsg-name {
+  font-family: var(--cond);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+.pmsg-text {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.5;
+  font-weight: 300;
+}
+.pmsg-text strong { color: var(--text); font-weight: 500; }
+.typing {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-top: 4px;
+}
+.typing span {
+  width: 5px; height: 5px;
+  background: var(--purple);
+  border-radius: 50%;
+  animation: typ 1.2s infinite;
+}
+.typing span:nth-child(2) { animation-delay: .2s; }
+.typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes typ { 0%,100%{opacity:.2;transform:translateY(0)} 50%{opacity:1;transform:translateY(-3px)} }
+
+/* STATS */
+.stats-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  background: var(--bg1);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stat-item {
+  flex: 1;
+  max-width: 250px;
+  padding: 2rem;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--cond);
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--purple-g);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* SECTIONS */
+section {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+}
+
+.section-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple-l);
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-family: var(--cond);
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+
+.section-desc {
+  color: var(--dim);
+  font-size: 1rem;
+  max-width: 480px;
+  font-weight: 300;
+  margin-bottom: 3.5rem;
+}
+
+/* MODES */
+.modes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.mode-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .25s, transform .2s;
+}
+.mode-card:hover { border-color: rgba(139,92,246,0.3); transform: translateY(-3px); }
+.mode-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+}
+.mode-card.create::after { background: linear-gradient(90deg, var(--blue), var(--purple)); }
+.mode-card.run::after { background: linear-gradient(90deg, var(--purple), var(--teal)); }
+
+.mode-icon {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border);
+}
+.mode-card.create .mode-icon { background: rgba(96,165,250,0.08); }
+.mode-card.run .mode-icon { background: var(--purple-d); }
+
+.mode-card h3 {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.mode-card p {
+  color: var(--dim);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+.feat-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.feat-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--dim);
+}
+.feat-list li::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--purple);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* TARGETS */
+.targets-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.5rem;
+}
+.target-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: border-color .2s, transform .2s;
+}
+.target-card:hover { border-color: rgba(139,92,246,0.25); transform: translateY(-3px); }
+.target-num {
+  font-family: var(--cond);
+  font-weight: 800;
+  font-size: 3rem;
+  background: var(--purple-g);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 1rem;
+  display: block;
+}
+.target-card h4 {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+}
+.target-card p {
+  color: var(--dim);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* QUOTE */
+.quote-box {
+  background: var(--bg1);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 12px;
+  padding: 2.5rem 3rem;
+  position: relative;
+  margin-top: 3rem;
+}
+.quote-mark {
+  position: absolute;
+  top: -1.5rem; left: 2rem;
+  font-family: var(--cond);
+  font-size: 6rem;
+  color: var(--purple);
+  opacity: 0.15;
+  line-height: 1;
+}
+.quote-box p {
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+.quote-src {
+  display: block;
+  margin-top: 1rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  font-style: normal;
+}
+
+/* CTA BOTTOM */
+.cta-bottom {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto 5rem;
+  padding: 0 2rem;
+}
+.cta-inner {
+  background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(45,212,191,0.05));
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 16px;
+  padding: 4rem;
+  text-align: center;
+}
+.cta-inner h2 { margin-bottom: 1rem; }
+.cta-inner p {
+  color: var(--dim);
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+}
+
+/* FOOTER */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.footer-logo {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer-right {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; align-items: start; }
+.plan-card {
+  background: var(--bg1); border: 1px solid var(--border); border-radius: 14px;
+  padding: 2rem; position: relative; transition: border-color .2s, transform .2s;
+}
+.plan-card:hover { transform: translateY(-3px); }
+.plan-card.popular {
+  border-color: rgba(139,92,246,0.4);
+  background: linear-gradient(180deg, rgba(139,92,246,0.07) 0%, var(--bg1) 60%);
+}
+.plan-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--purple-g); color: #fff; font-family: var(--cond); font-weight: 700;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 14px; border-radius: 100px; white-space: nowrap;
+}
+.plan-name { font-family: var(--cond); font-weight: 700; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 1rem; }
+.plan-price { font-family: var(--cond); font-weight: 800; font-size: 3rem; line-height: 1; letter-spacing: -1px; margin-bottom: 0.3rem; }
+.plan-price sup { font-size: 1.1rem; font-weight: 500; color: var(--dim); font-family: var(--sans); vertical-align: super; }
+.plan-period { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-bottom: 1.5rem; letter-spacing: 0.06em; }
+.plan-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.8rem; }
+.plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; color: var(--dim); font-weight: 300; line-height: 1.4; }
+.plan-features li::before { content: '✓'; color: var(--purple); font-weight: 700; font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+.plan-features li.off { color: var(--muted); }
+.plan-features li.off::before { content: '–'; color: var(--muted); }
+.btn-plan { font-family: var(--cond); font-weight: 700; font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.75rem; border-radius: 7px; text-decoration: none; display: block; text-align: center; transition: all .2s; width: 100%; }
+.btn-plan-ghost { border: 1px solid var(--border2); color: var(--dim); }
+.btn-plan-ghost:hover { border-color: rgba(139,92,246,0.4); color: var(--purple-l); }
+.btn-plan-primary { background: var(--purple-g); color: #fff; border: none; }
+.btn-plan-primary:hover { filter: brightness(1.1); }
+.pricing-note { text-align: center; font-family: var(--mono); font-size: 10.5px; color: var(--muted); margin-top: 1.5rem; letter-spacing: 0.05em; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 8px; margin-top: 3rem; }
+.faq-item { background: var(--bg1); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; font-family: var(--cond); font-weight: 600; font-size: 1rem; letter-spacing: 0.02em; color: var(--text); background: none; border: none; cursor: pointer; text-align: left; gap: 1rem; transition: background .15s; }
+.faq-q:hover { background: var(--bg2); }
+.faq-icon { font-size: 20px; color: var(--purple); flex-shrink: 0; transition: transform .25s; line-height: 1; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .25s; padding: 0 1.5rem; color: var(--dim); font-size: 0.9rem; line-height: 1.75; font-weight: 300; }
+.faq-item.open .faq-a { max-height: 300px; padding: 0 1.5rem 1.25rem; }
+
+/* FOOTER */
+.footer-full { position: relative; z-index: 1; border-top: 1px solid var(--border); background: var(--bg1); padding: 3rem 2.5rem 2rem; }
+.footer-grid { max-width: 1100px; margin: 0 auto 3rem; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
+.footer-brand p { color: var(--muted); font-size: 0.875rem; font-weight: 300; line-height: 1.7; margin-top: 1rem; max-width: 280px; }
+.footer-col-title { font-family: var(--cond); font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 1rem; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-links a { color: var(--muted); font-size: 0.875rem; text-decoration: none; font-weight: 300; transition: color .15s; }
+.footer-links a:hover { color: var(--purple-l); }
+.footer-bottom { max-width: 1100px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.footer-copy { font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+
+@media (max-width: 768px) {
+  nav { padding: 0 1.25rem; }
+  .modes-grid, .targets-grid, .pricing-grid { grid-template-columns: 1fr; }
+  .preview-body { grid-template-columns: 1fr; }
+  .preview-nav { display: none; }
+  .stats-row { flex-wrap: wrap; }
+  .stat-item { min-width: 50%; border-bottom: 1px solid var(--border); }
+  .cta-inner { padding: 2.5rem 1.5rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+}
 </style>
 </head>
 <body>
-<div class="app">
- 
-  <aside class="sidebar">
-    <div class="sb-logo">
-      <div class="sb-logo-mark">◈</div>
-      <div class="sb-logo-text">Agent<span>Company</span></div>
+
+<nav>
+  <a href="landing.html" class="logo"><span class="logo-mark">◈</span> AgentCompany</a>
+  <div class="nav-right">
+    <a href="#how" class="nav-link">How it works</a>
+    <a href="#who" class="nav-link">Who it's for</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+    <a href="auth.html" class="btn-nav">Login / Sign up</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">
+    <span class="badge-dot"></span>
+    Launching soon · Powered by OpenAI
+  </div>
+  <h1>Your Business.<br><span class="grad">Fully Automated.</span></h1>
+  <p class="hero-sub">AgentCompany is a digital workforce that builds and runs your operations — from websites and apps to daily reports and data processing. Zero code required.</p>
+  <div class="hero-btns">
+    <a href="auth.html" class="btn-primary">Get early access</a>
+    <a href="#how" class="btn-ghost">See how it works ↓</a>
+  </div>
+
+  <!-- Dashboard preview -->
+  <div class="preview-wrap">
+    <div class="preview-bar">
+      <div class="preview-dots">
+        <span class="d1"></span><span class="d2"></span><span class="d3"></span>
+      </div>
+      <div class="preview-title">AgentCompany — CEO Chat</div>
     </div>
-    <nav class="sb-nav">
-      <div class="sb-section">Workspace</div>
-      <button class="nav-btn active" id="nav-chat" onclick="setView('chat')">
-        <span class="nav-icon">💬</span> CEO Chat
-      </button>
-      <button class="nav-btn" id="nav-files" onclick="setView('files')">
-        <span class="nav-icon">📁</span> Files
-      </button>
-      <div id="sessions-area">
-        <div class="sb-section">Recent chats</div>
-        <div id="sessions-list" class="sb-sessions"></div>
-        <div class="session-new" onclick="newChat()"><span>＋</span> New chat</div>
+    <div class="preview-body">
+      <div class="preview-nav">
+        <div class="pnav-group">Overview</div>
+        <div class="pnav-item active">💬 CEO Chat</div>
+        <div class="pnav-item">📡 Live Feed</div>
+        <div class="pnav-group">Structure</div>
+        <div class="pnav-item">🏢 Org Chart</div>
+        <div class="pnav-item">👥 Teams</div>
+        <div class="pnav-group">Control</div>
+        <div class="pnav-item">⚡ Terminal</div>
+        <div class="pnav-item">📥 Requests</div>
       </div>
-    </nav>
-    <div class="sb-footer">
-      <div class="user-avatar" id="user-avatar">CB</div>
-      <div class="user-info">
-        <div class="user-name" id="user-name">Colin</div>
-        <div class="user-plan">Pro plan</div>
-      </div>
-      <button class="logout-btn" title="Logout" onclick="logout()">⏻</button>
-    </div>
-  </aside>
- 
-  <main>
-    <div class="topbar">
-      <span class="topbar-title" id="topbar-title">CEO Chat</span>
-      <span class="topbar-sep">·</span>
-      <span class="topbar-sub" id="topbar-sub">New conversation</span>
-      <div class="topbar-right">
-        <div class="status-dot" id="status-dot"></div>
-        <span class="status-label" id="status-label">Connecting…</span>
-      </div>
-    </div>
- 
-    <!-- CHAT -->
-    <div class="panel active" id="panel-chat">
-      <div class="chat-messages" id="msg-scroll">
-        <div class="chat-empty" id="chat-empty">
-          <div class="chat-empty-icon">◈</div>
-          <h3>Start a conversation</h3>
-          <p>Tell the CEO what you need — build a website, automate a task, generate a report. Just write in plain language.</p>
-        </div>
-      </div>
-      <div class="composer">
-        <div class="composer-inner">
-          <textarea class="composer-textarea" id="composer-text" placeholder="Write to the CEO…" rows="1"
-            onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-          <button class="composer-send" id="send-btn" onclick="sendMessage()">↑</button>
-        </div>
-        <div class="composer-hint">Enter to send · Shift+Enter for new line</div>
-      </div>
-    </div>
- 
-    <!-- FILES -->
-    <div class="panel" id="panel-files">
-      <div class="files-layout">
-        <div class="files-list">
-          <div class="files-toolbar">
-            <input class="files-search" placeholder="Search files…" oninput="filterFiles(this.value)">
+      <div class="preview-main">
+        <div class="pmsg">
+          <div class="pmsg-avatar av-usr">DU</div>
+          <div class="pmsg-body">
+            <div class="pmsg-name" style="color:#e6e3f5">You</div>
+            <div class="pmsg-text">Build a website for my restaurant and send me every evening a summary of today's orders.</div>
           </div>
-          <div class="files-scroll" id="files-scroll"></div>
         </div>
-        <div class="preview-pane" id="preview-pane">
-          <div class="preview-topbar">
-            <div class="preview-dots"><span class="pd-r"></span><span class="pd-y"></span><span class="pd-g"></span></div>
-            <div class="preview-url" id="preview-url">No file selected</div>
-            <button class="preview-action" id="preview-open-btn" onclick="openInNew()" style="display:none">Open ↗</button>
-            <button class="preview-action" id="preview-dl-btn" onclick="downloadFile()" style="display:none">Download</button>
+        <div class="pmsg">
+          <div class="pmsg-avatar av-ceo">CEO</div>
+          <div class="pmsg-body">
+            <div class="pmsg-name" style="color:#8b5cf6">CEO</div>
+            <div class="pmsg-text"><strong>Understood.</strong> I'm assigning this to the Web Team and the Reporting Team. The site will be live within minutes — the daily order summary will run automatically every evening at 20:00.</div>
           </div>
-          <div class="preview-body" id="preview-body">
-            <div class="preview-empty">
-              <div class="preview-empty-icon">👆</div>
-              <p>Select a file to preview</p>
+        </div>
+        <div class="pmsg">
+          <div class="pmsg-avatar av-mgr">MGR</div>
+          <div class="pmsg-body">
+            <div class="pmsg-name" style="color:#2dd4bf">Manager · Web</div>
+            <div class="pmsg-text">Worker-1 is building the restaurant site... <strong>deployment ready.</strong></div>
+          </div>
+        </div>
+        <div class="pmsg">
+          <div class="pmsg-avatar av-ceo">CEO</div>
+          <div class="pmsg-body">
+            <div class="pmsg-name" style="color:#8b5cf6">CEO</div>
+            <div class="pmsg-text">
+              <div class="typing"><span></span><span></span><span></span></div>
             </div>
           </div>
         </div>
       </div>
     </div>
- 
-  </main>
+  </div>
 </div>
-<div id="toast"></div>
- 
+
+<div class="stats-row">
+  <div class="stat-item">
+    <span class="stat-num">2</span>
+    <span class="stat-label">Core capabilities</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">24/7</span>
+    <span class="stat-label">Always-on automation</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">0</span>
+    <span class="stat-label">Lines of code needed</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">DACH</span>
+    <span class="stat-label">Primary market</span>
+  </div>
+</div>
+
+<section id="how">
+  <p class="section-tag">// how it works</p>
+  <h2>Create.<br>Then let it run.</h2>
+  <p class="section-desc">Two powerful modes that work together to fully automate your digital business operations.</p>
+  <div class="modes-grid">
+    <div class="mode-card create">
+      <div class="mode-icon">⚡</div>
+      <h3>Create</h3>
+      <p>AI builds your entire digital presence in the browser — live preview, automatic deployment. No developers needed.</p>
+      <ul class="feat-list">
+        <li>Websites & landing pages</li>
+        <li>Web apps & admin panels</li>
+        <li>Business software & tools</li>
+        <li>API integrations & dashboards</li>
+      </ul>
+    </div>
+    <div class="mode-card run">
+      <div class="mode-icon">🔄</div>
+      <h3>Run</h3>
+      <p>AI works in the background — continuously monitoring, processing, and reporting. 24 hours a day.</p>
+      <ul class="feat-list">
+        <li>Daily KPI reports & summaries</li>
+        <li>Order processing & alerts</li>
+        <li>Data monitoring & analysis</li>
+        <li>Automated recurring workflows</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="who">
+  <p class="section-tag">// who it's for</p>
+  <h2>Built for<br>every scale.</h2>
+  <p class="section-desc">From the local burger joint to BMW — AgentCompany adapts to any business size.</p>
+  <div class="targets-grid">
+    <div class="target-card">
+      <span class="target-num">01</span>
+      <h4>Private users</h4>
+      <p>Personal automation, simple digital tools, and AI-assisted workflows — built around your daily life.</p>
+    </div>
+    <div class="target-card">
+      <span class="target-num">02</span>
+      <h4>Small businesses</h4>
+      <p>Restaurants, shops, local services, and founders in the DACH region — get a digital team without the overhead.</p>
+    </div>
+    <div class="target-card">
+      <span class="target-num">03</span>
+      <h4>Enterprise</h4>
+      <p>Connect existing systems via API. Automated KPI reports, product insights, and operational overviews every morning.</p>
+    </div>
+  </div>
+  <div class="quote-box">
+    <div class="quote-mark">"</div>
+    <p>"Build me a website and send me every evening a summary of today's orders."<span class="quote-src">— A typical AgentCompany request from a restaurant owner in Munich</span></p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <p class="section-tag">// pricing</p>
+  <h2>Simple,<br>transparent pricing.</h2>
+  <p class="section-desc">Start free. Scale when you're ready. No hidden fees.</p>
+  <div class="pricing-grid">
+
+    <div class="plan-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">Free</div>
+      <div class="plan-period">Forever free · No credit card</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>1 active agent</li>
+        <li>CEO Chat access</li>
+        <li>5 automations / month</li>
+        <li>Community support</li>
+        <li class="off">Custom domains</li>
+        <li class="off">API access</li>
+        <li class="off">Priority support</li>
+      </ul>
+      <a href="auth.html" class="btn-plan btn-plan-ghost">Get started free</a>
+    </div>
+
+    <div class="plan-card popular">
+      <div class="plan-badge">Most popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price"><sup>€</sup>29</div>
+      <div class="plan-period">Per month · Cancel anytime</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Up to 10 agents</li>
+        <li>CEO + Manager + Worker teams</li>
+        <li>Unlimited automations</li>
+        <li>Custom domain hosting</li>
+        <li>Daily reports & summaries</li>
+        <li>Email support</li>
+        <li class="off">Dedicated account manager</li>
+      </ul>
+      <a href="auth.html" class="btn-plan btn-plan-primary">Start Pro trial</a>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price">Custom</div>
+      <div class="plan-period">Volume pricing · SLA included</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Unlimited agents & teams</li>
+        <li>Full API access</li>
+        <li>Custom integrations</li>
+        <li>White-label option</li>
+        <li>Dedicated account manager</li>
+        <li>Priority 24/7 support</li>
+        <li>On-premise deployment option</li>
+      </ul>
+      <a href="mailto:cray.berier@icloud.com" class="btn-plan btn-plan-ghost">Contact us</a>
+    </div>
+
+  </div>
+  <p class="pricing-note">All plans include end-to-end encryption · GDPR compliant · Hosted in EU</p>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <p class="section-tag">// faq</p>
+  <h2>Frequently asked<br>questions.</h2>
+  <p class="section-desc">Still not sure? Here are the most common questions.</p>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What exactly is AgentCompany?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">AgentCompany is an AI-powered digital workforce. You give it instructions in plain language — it builds websites, runs automations, generates reports, and manages recurring tasks automatically. Think of it as hiring a full team of digital workers, but at a fraction of the cost.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Do I need to know how to code?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Not at all. AgentCompany is built for people who want results without technical knowledge. You describe what you want in plain language — English or German — and the AI handles everything else.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How does the Create mode work?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">You describe what you need — a website, an admin panel, a booking tool — and the AI builds it live in your browser with a real-time preview. Once you approve it, it's automatically deployed and ready to use. No hosting setup required.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What can the Run mode automate?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Anything that repeats. Daily order summaries, weekly KPI reports, monitoring your data for anomalies, sending alerts when something changes, processing incoming requests — once you set it up, it runs automatically every day without you doing anything.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is my data safe?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes. All data is encrypted end-to-end and stored on EU-based servers. We are fully GDPR compliant. Your business data never leaves your account and is never used to train AI models.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Can I connect my existing tools?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes — Pro and Enterprise plans include API access so you can connect AgentCompany to your existing systems, databases, or third-party tools. Enterprise customers also get custom integrations built for their specific stack.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How do I get started?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Create a free account — no credit card required. You'll have immediate access to the CEO Chat where you can start giving instructions right away. The Starter plan is free forever, so you can take your time before upgrading.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="cta-bottom">
+  <div class="cta-inner">
+    <p class="section-tag">// early access</p>
+    <h2>Ready to<br>automate?</h2>
+    <p>We're launching soon. Create a free account to be one of the first.</p>
+    <a href="auth.html" class="btn-primary">Create free account</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer-full">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo"><span class="logo-mark">◈</span> AgentCompany</div>
+      <p>A digital workforce for businesses of any size. Build, automate, and grow — powered by AI.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <ul class="footer-links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#who">Who it's for</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="auth.html">Login</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="mailto:cray.berier@icloud.com">cray.berier@icloud.com</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Colin Berier · AgentCompany · All rights reserved</div>
+    <div class="footer-copy">GDPR compliant · Hosted in EU · Powered by OpenAI</div>
+  </div>
+</footer>
+
 <script>
-/* Auth guard */
-const session = JSON.parse(localStorage.getItem('ac_session') || 'null');
-if (!session) window.location.href = 'auth.html';
- 
-if (session) {
-  const initials = (session.name||'U').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-  document.getElementById('user-avatar').textContent = initials;
-  document.getElementById('user-name').textContent = session.name || session.email || 'User';
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
 }
- 
-// ── Backend URL ────────────────────────────────────────────────────
-// Set this to your real server URL once you have a backend.
-// Leave empty ('') to run in demo mode (no backend needed).
-const API = '';
-// ──────────────────────────────────────────────────────────────────
-
-let view='chat', messages=[], sessions=[], activeSession=null, allFiles=[], activeFile=null, isTyping=false;
-
-// Demo responses shown when no backend is configured
-const DEMO_REPLIES = [
-  "Understood. I'm spinning up the team now — this will be done shortly.",
-  "On it. I've assigned this task to the Web Team. Expect a live preview within minutes.",
-  "Got it. The Reporting Team will handle this. Your first summary will arrive tonight at 20:00.",
-  "I've delegated this to Manager · Ops. Worker-1 is already processing your request.",
-  "No problem. The team is working on it. I'll report back as soon as it's ready.",
-];
- 
-function setView(v) {
-  view=v;
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('nav-'+v).classList.add('active');
-  document.getElementById('panel-'+v).classList.add('active');
-  if(v==='chat'){
-    document.getElementById('topbar-title').textContent='CEO Chat';
-    document.getElementById('topbar-sub').textContent=activeSession?('Session · '+String(activeSession).slice(0,8)):'New conversation';
-  } else if(v==='files'){
-    document.getElementById('topbar-title').textContent='Files';
-    document.getElementById('topbar-sub').textContent='Agent-created files & projects';
-    loadFiles();
-  }
-}
- 
-function setStatus(live,label){
-  document.getElementById('status-dot').className='status-dot'+(live?' live':'');
-  document.getElementById('status-label').textContent=label;
-}
- 
-let toastTimer;
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2500)}
- 
-function logout(){if(confirm('Logout?')){localStorage.removeItem('ac_session');window.location.href='auth.html'}}
- 
-function autoResize(ta){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,160)+'px'}
- 
-function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}}
- 
-function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
- 
-function agentColor(n){if(!n)return'#7a7896';const l=n.toLowerCase();if(l==='ceo')return'#a78bfa';if(l==='user')return'#dddaf0';if(l.startsWith('manager'))return'#34d399';if(l.startsWith('worker'))return'#60a5fa';return'#7a7896'}
-function agentAvatarClass(n){if(!n)return'av-usr';const l=n.toLowerCase();if(l==='ceo')return'av-ceo';if(l.startsWith('manager'))return'av-mgr';if(l.startsWith('worker'))return'av-wkr';return'av-usr'}
-function agentInitials(n){if(!n)return'?';if(n.toLowerCase()==='ceo')return'CEO';if(n.toLowerCase()==='user')return(session?.name||'You').split(' ')[0].slice(0,3);return n.replace(/_/g,' ').split(' ').map(p=>p[0]).join('').toUpperCase().slice(0,3)}
-function formatTime(ts){if(!ts)return'';try{const d=new Date(ts.includes('T')?ts:ts.replace(' ','T')+'Z');return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}catch{return''}}
- 
-function renderMessages(){
-  const scroll=document.getElementById('msg-scroll');
-  const empty=document.getElementById('chat-empty');
-  if(messages.length===0){empty.style.display='flex';return}
-  empty.style.display='none';
-  const wasBottom=scroll.scrollHeight-scroll.scrollTop-scroll.clientHeight<80;
-  scroll.querySelectorAll('.msg-group').forEach(el=>el.remove());
-  messages.forEach(msg=>{
-    const name=msg.agent||msg.sender||'user';
-    const text=msg.content||msg.message||'';
-    const time=msg.timestamp||msg.created_at||'';
-    const el=document.createElement('div');
-    el.className='msg-group';
-    el.innerHTML=`<div class="msg-avatar ${agentAvatarClass(name)}">${esc(agentInitials(name))}</div>
-    <div class="msg-body">
-      <div class="msg-meta"><span class="msg-name" style="color:${agentColor(name)}">${esc(name==='user'?(session?.name||'You'):name)}</span><span class="msg-time">${formatTime(time)}</span></div>
-      <div class="msg-text">${esc(text).replace(/\n/g,'<br>')}</div>
-    </div>`;
-    scroll.appendChild(el);
-  });
-  if(isTyping){
-    const el=document.createElement('div');el.className='msg-group';el.id='typing-ind';
-    el.innerHTML=`<div class="msg-avatar av-ceo">CEO</div><div class="msg-body"><div class="msg-meta"><span class="msg-name" style="color:#a78bfa">CEO</span></div><div class="msg-text"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
-    scroll.appendChild(el);
-  }
-  if(wasBottom) scroll.scrollTop=scroll.scrollHeight;
-}
- 
-async function sendMessage(){
-  const ta=document.getElementById('composer-text');
-  const text=ta.value.trim();if(!text)return;
-  ta.value='';ta.style.height='auto';
-  document.getElementById('send-btn').disabled=true;
-  messages.push({agent:'user',content:text,timestamp:new Date().toISOString()});
-  isTyping=true;renderMessages();
-
-  if(!API){
-    // Demo mode: simulate a CEO reply after a short delay
-    await new Promise(r=>setTimeout(r,1200+Math.random()*800));
-    isTyping=false;
-    const reply=DEMO_REPLIES[Math.floor(Math.random()*DEMO_REPLIES.length)];
-    if(!activeSession) activeSession='demo-'+Date.now();
-    messages.push({agent:'CEO',content:reply,timestamp:new Date().toISOString()});
-    renderMessages();
-    document.getElementById('send-btn').disabled=false;
-    return;
-  }
-
-  try{
-    const res=await fetch(API+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,session:activeSession})});
-    if(res.ok){const d=await res.json();if(d.session)activeSession=d.session;isTyping=false;await loadMessages();}
-    else throw new Error();
-  }catch{
-    isTyping=false;
-    messages.push({agent:'CEO',content:'⚠ Backend not reachable. Running in demo mode.',timestamp:new Date().toISOString()});
-    renderMessages();setStatus(false,'Demo');
-  }
-  document.getElementById('send-btn').disabled=false;
-}
- 
-async function loadMessages(){
-  if(!activeSession)return;
-  try{const res=await fetch(`${API}/messages?session=${encodeURIComponent(activeSession)}`);if(!res.ok)return;const d=await res.json();messages=d.messages||d||[];isTyping=false;renderMessages();}catch{}
-}
- 
-async function loadSessions(){
-  if(!API){setStatus(true,'Demo mode');return;}
-  try{
-    const res=await fetch(API+'/sessions',{signal:AbortSignal.timeout(4000)});
-    if(!res.ok)return;const d=await res.json();sessions=d.sessions||d||[];renderSessions();setStatus(true,'Live');
-  }catch{setStatus(false,'Offline')}
-}
- 
-function renderSessions(){
-  const list=document.getElementById('sessions-list');list.innerHTML='';
-  sessions.slice(0,10).forEach(s=>{
-    const id=s.id||s.session_id||s;
-    const label=s.title||s.name||('Chat #'+String(id).slice(0,6));
-    const el=document.createElement('div');
-    el.className='session-item'+(id===activeSession?' active':'');
-    el.textContent=label;el.title=label;
-    el.onclick=()=>{
-      activeSession=id;messages=[];
-      document.querySelectorAll('.session-item').forEach(e=>e.classList.remove('active'));
-      el.classList.add('active');
-      document.getElementById('topbar-sub').textContent='Session · '+String(id).slice(0,8);
-      loadMessages();
-    };
-    list.appendChild(el);
-  });
-}
- 
-function newChat(){
-  activeSession=null;messages=[];
-  document.querySelectorAll('.session-item').forEach(e=>e.classList.remove('active'));
-  document.getElementById('topbar-sub').textContent='New conversation';
-  document.getElementById('chat-empty').style.display='flex';
-  document.getElementById('msg-scroll').querySelectorAll('.msg-group').forEach(e=>e.remove());
-  document.getElementById('composer-text').focus();
-}
- 
-/* Files */
-const MOCK_FILES=[
-  {id:1,name:'restaurant-website',ext:'html',type:'web',size:'34 KB',date:'Today 14:22',status:'live',url:'#',desc:'Restaurant landing page'},
-  {id:2,name:'daily-orders-report',ext:'txt',type:'txt',size:'12 KB',date:'Today 20:00',status:'done',url:'#',desc:'Automated daily order summary'},
-  {id:3,name:'data-scraper',ext:'py',type:'py',size:'8 KB',date:'Yesterday',status:'done',url:'#',desc:'Python monitoring script'},
-  {id:4,name:'admin-dashboard',ext:'html',type:'web',size:'78 KB',date:'Mon 11:05',status:'draft',url:'#',desc:'Admin panel for orders'},
-  {id:5,name:'weekly-kpi',ext:'txt',type:'txt',size:'6 KB',date:'Sun 08:00',status:'done',url:'#',desc:'Weekly KPI report'},
-];
-const TYPE_ICONS={web:'🌐',py:'🐍',txt:'📄',img:'🖼'};
-const TYPE_CLS={web:'fi-web',py:'fi-py',txt:'fi-txt',img:'fi-img'};
-const BADGE_CLS={live:'fb-live',draft:'fb-draft',done:'fb-done'};
- 
-async function loadFiles(){
-  let files=MOCK_FILES;
-  if(API){
-    try{const res=await fetch(API+'/files',{signal:AbortSignal.timeout(3000)});if(res.ok){const d=await res.json();files=d.files||d||MOCK_FILES;}}catch{}
-  }
-  allFiles=files;renderFiles(files);
-}
- 
-function renderFiles(files){
-  const scroll=document.getElementById('files-scroll');scroll.innerHTML='';
-  if(!files.length){scroll.innerHTML='<div style="padding:40px 16px;text-align:center;color:var(--muted);font-size:13px;">No files yet. Ask the CEO to build something!</div>';return;}
-  const groups={};
-  files.forEach(f=>{const g=f.type==='web'?'Websites & Apps':f.type==='py'?'Scripts':'Reports & Documents';if(!groups[g])groups[g]=[];groups[g].push(f);});
-  Object.entries(groups).forEach(([g,items])=>{
-    const lbl=document.createElement('div');lbl.className='file-group-label';lbl.textContent=g;scroll.appendChild(lbl);
-    items.forEach(f=>{
-      const el=document.createElement('div');
-      el.className='file-item'+(activeFile?.id===f.id?' active':'');
-      el.innerHTML=`<div class="file-icon ${TYPE_CLS[f.type]||'fi-txt'}">${TYPE_ICONS[f.type]||'📄'}</div>
-      <div class="file-info"><div class="file-name">${esc(f.name)}.${f.ext}</div><div class="file-meta">${f.size} · ${f.date}</div></div>
-      <span class="file-badge ${BADGE_CLS[f.status]||'fb-draft'}">${f.status}</span>`;
-      el.onclick=()=>selectFile(f,el);
-      scroll.appendChild(el);
-    });
-  });
-}
- 
-function filterFiles(q){renderFiles(allFiles.filter(f=>(f.name+'.'+f.ext+f.desc).toLowerCase().includes(q.toLowerCase())))}
- 
-function selectFile(f,el){
-  activeFile=f;
-  document.querySelectorAll('.file-item').forEach(e=>e.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('preview-url').textContent=f.name+'.'+f.ext;
-  document.getElementById('preview-open-btn').style.display=f.type==='web'?'':'none';
-  document.getElementById('preview-dl-btn').style.display='';
-  const body=document.getElementById('preview-body');
-  if(f.type==='web'){
-    body.innerHTML=f.url!=='#'
-      ?`<iframe class="preview-iframe" src="${f.url}" title="${esc(f.name)}"></iframe>`
-      :`<div class="preview-empty"><div class="preview-empty-icon">🌐</div><p>Preview available once deployed</p><p style="font-size:11px;font-family:var(--mono);margin-top:4px;opacity:.5">${esc(f.name)}.html</p></div>`;
-  } else if(f.type==='py'){
-    body.innerHTML=`<div class="preview-code"><span class="cm"># ${esc(f.name)}.py</span>\n<span class="cm"># ${esc(f.desc)}</span>\n\n<span class="kw">import</span> <span class="fn">requests</span>\n<span class="kw">import</span> <span class="fn">json</span>\n<span class="kw">from</span> <span class="fn">datetime</span> <span class="kw">import</span> <span class="fn">datetime</span>\n\n<span class="kw">def</span> <span class="fn">run</span>():\n    data = fetch_data()\n    report = generate_report(data)\n    send_summary(report)\n\n<span class="kw">if</span> __name__ == <span class="st">'__main__'</span>:\n    run()</div>`;
-  } else {
-    body.innerHTML=`<div class="preview-code"><span class="cm">── ${esc(f.name)}.${f.ext} ──────────────────────────\n</span>${esc(f.desc)}\n\n<span class="cm">Generated by AgentCompany · ${f.date}</span></div>`;
-  }
-}
- 
-function openInNew(){if(activeFile?.url&&activeFile.url!=='#')window.open(activeFile.url,'_blank');else toast('No live URL yet — file not deployed.')}
-function downloadFile(){toast('Download started…')}
- 
-async function init(){
-  setStatus(false,'Connecting…');
-  await loadSessions();
-  setInterval(async()=>{if(view==='chat'&&activeSession)await loadMessages();},5000);
-}
-init();
 </script>
+
 </body>
 </html>
