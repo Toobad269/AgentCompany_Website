@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentCompany — Your Digital Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #07070d;
+  --bg1:     #0d0d18;
+  --bg2:     #141426;
+  --bg3:     #1c1c32;
+  --bg4:     #25253f;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --purple:  #8b5cf6;
+  --purple-l:#a78bfa;
+  --purple-d:rgba(139,92,246,0.12);
+  --purple-g:linear-gradient(135deg,#8b5cf6 0%,#a78bfa 100%);
+  --teal:    #2dd4bf;
+  --blue:    #60a5fa;
+  --green:   #4ade80;
+  --text:    #e6e3f5;
+  --dim:     #9290b0;
+  --muted:   #58567a;
+  --mono:    'JetBrains Mono', monospace;
+  --sans:    'Barlow', sans-serif;
+  --cond:    'Barlow Condensed', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Grid bg */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
+  background-size: 52px 52px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glow orb */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 600px;
+  background: radial-gradient(ellipse, rgba(139,92,246,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 56px;
+  background: rgba(7,7,13,0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.logo-mark {
+  background: var(--purple-g);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 24px;
+}
+
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+
+.nav-link {
+  font-family: var(--cond);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color .15s;
+}
+.nav-link:hover { color: var(--text); }
+
+.btn-nav {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--purple-g);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: filter .15s;
+}
+.btn-nav:hover { filter: brightness(1.12); }
+
+/* HERO */
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 7rem 2rem 5rem;
+}
+
+.badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--purple-l);
+  background: var(--purple-d);
+  border: 1px solid rgba(139,92,246,0.25);
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.badge-dot {
+  width: 6px; height: 6px;
+  background: var(--purple-l);
+  border-radius: 50%;
+  animation: bpulse 2s infinite;
+}
+@keyframes bpulse {
+  0%,100% { opacity:1; } 50% { opacity:.3; }
+}
+
+h1 {
+  font-family: var(--cond);
+  font-weight: 800;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1.0;
+  letter-spacing: -1px;
+  max-width: 900px;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+h1 .grad {
+  background: var(--purple-g);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--dim);
+  max-width: 560px;
+  margin-bottom: 3rem;
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+
+.btn-primary {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  background: var(--purple-g);
+  color: #fff;
+  border: none;
+  padding: 0.85rem 2.2rem;
+  border-radius: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .2s;
+}
+.btn-primary:hover { filter: brightness(1.12); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(139,92,246,0.35); }
+
+.btn-ghost {
+  font-family: var(--cond);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border: 1px solid var(--border2);
+  color: var(--dim);
+  padding: 0.85rem 2.2rem;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: all .2s;
+}
+.btn-ghost:hover { border-color: rgba(139,92,246,0.4); color: var(--purple-l); }
+
+/* Dashboard preview */
+.preview-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border2);
+  box-shadow: 0 0 80px rgba(139,92,246,0.15), 0 40px 80px rgba(0,0,0,0.5);
+}
+
+.preview-bar {
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.preview-dots { display: flex; gap: 6px; }
+.preview-dots span {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.d1 { background: #f87171; }
+.d2 { background: #fbbf24; }
+.d3 { background: #4ade80; }
+.preview-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0 auto;
+}
+.preview-body {
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  height: 360px;
+}
+.preview-nav {
+  background: var(--bg1);
+  border-right: 1px solid var(--border);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pnav-group {
+  font-family: var(--cond);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 8px 4px;
+}
+.pnav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: 5px;
+  font-family: var(--cond);
+  font-size: 12px;
+  color: var(--dim);
+}
+.pnav-item.active { background: var(--purple-d); color: var(--purple); }
+.preview-main {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+.pmsg {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.pmsg-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-family: var(--mono);
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.av-ceo { background: var(--purple-d); color: var(--purple); border: 1px solid rgba(139,92,246,0.3); }
+.av-mgr { background: rgba(45,212,191,0.1); color: var(--teal); border: 1px solid rgba(45,212,191,0.25); }
+.av-usr { background: rgba(230,227,245,0.08); color: var(--text); border: 1px solid var(--border2); }
+.pmsg-body { flex: 1; }
+.pmsg-name {
+  font-family: var(--cond);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+.pmsg-text {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.5;
+  font-weight: 300;
+}
+.pmsg-text strong { color: var(--text); font-weight: 500; }
+.typing {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-top: 4px;
+}
+.typing span {
+  width: 5px; height: 5px;
+  background: var(--purple);
+  border-radius: 50%;
+  animation: typ 1.2s infinite;
+}
+.typing span:nth-child(2) { animation-delay: .2s; }
+.typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes typ { 0%,100%{opacity:.2;transform:translateY(0)} 50%{opacity:1;transform:translateY(-3px)} }
+
+/* STATS */
+.stats-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  background: var(--bg1);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stat-item {
+  flex: 1;
+  max-width: 250px;
+  padding: 2rem;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--cond);
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--purple-g);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* SECTIONS */
+section {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+}
+
+.section-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple-l);
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-family: var(--cond);
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+
+.section-desc {
+  color: var(--dim);
+  font-size: 1rem;
+  max-width: 480px;
+  font-weight: 300;
+  margin-bottom: 3.5rem;
+}
+
+/* MODES */
+.modes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.mode-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .25s, transform .2s;
+}
+.mode-card:hover { border-color: rgba(139,92,246,0.3); transform: translateY(-3px); }
+.mode-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+}
+.mode-card.create::after { background: linear-gradient(90deg, var(--blue), var(--purple)); }
+.mode-card.run::after { background: linear-gradient(90deg, var(--purple), var(--teal)); }
+
+.mode-icon {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border);
+}
+.mode-card.create .mode-icon { background: rgba(96,165,250,0.08); }
+.mode-card.run .mode-icon { background: var(--purple-d); }
+
+.mode-card h3 {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.mode-card p {
+  color: var(--dim);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+.feat-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.feat-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--dim);
+}
+.feat-list li::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--purple);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* TARGETS */
+.targets-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.5rem;
+}
+.target-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: border-color .2s, transform .2s;
+}
+.target-card:hover { border-color: rgba(139,92,246,0.25); transform: translateY(-3px); }
+.target-num {
+  font-family: var(--cond);
+  font-weight: 800;
+  font-size: 3rem;
+  background: var(--purple-g);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 1rem;
+  display: block;
+}
+.target-card h4 {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+}
+.target-card p {
+  color: var(--dim);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* QUOTE */
+.quote-box {
+  background: var(--bg1);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 12px;
+  padding: 2.5rem 3rem;
+  position: relative;
+  margin-top: 3rem;
+}
+.quote-mark {
+  position: absolute;
+  top: -1.5rem; left: 2rem;
+  font-family: var(--cond);
+  font-size: 6rem;
+  color: var(--purple);
+  opacity: 0.15;
+  line-height: 1;
+}
+.quote-box p {
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+.quote-src {
+  display: block;
+  margin-top: 1rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  font-style: normal;
+}
+
+/* CTA BOTTOM */
+.cta-bottom {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto 5rem;
+  padding: 0 2rem;
+}
+.cta-inner {
+  background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(45,212,191,0.05));
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 16px;
+  padding: 4rem;
+  text-align: center;
+}
+.cta-inner h2 { margin-bottom: 1rem; }
+.cta-inner p {
+  color: var(--dim);
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+}
+
+/* FOOTER */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.footer-logo {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer-right {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; align-items: start; }
+.plan-card {
+  background: var(--bg1); border: 1px solid var(--border); border-radius: 14px;
+  padding: 2rem; position: relative; transition: border-color .2s, transform .2s;
+}
+.plan-card:hover { transform: translateY(-3px); }
+.plan-card.popular {
+  border-color: rgba(139,92,246,0.4);
+  background: linear-gradient(180deg, rgba(139,92,246,0.07) 0%, var(--bg1) 60%);
+}
+.plan-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--purple-g); color: #fff; font-family: var(--cond); font-weight: 700;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 14px; border-radius: 100px; white-space: nowrap;
+}
+.plan-name { font-family: var(--cond); font-weight: 700; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 1rem; }
+.plan-price { font-family: var(--cond); font-weight: 800; font-size: 3rem; line-height: 1; letter-spacing: -1px; margin-bottom: 0.3rem; }
+.plan-price sup { font-size: 1.1rem; font-weight: 500; color: var(--dim); font-family: var(--sans); vertical-align: super; }
+.plan-period { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-bottom: 1.5rem; letter-spacing: 0.06em; }
+.plan-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.8rem; }
+.plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; color: var(--dim); font-weight: 300; line-height: 1.4; }
+.plan-features li::before { content: '✓'; color: var(--purple); font-weight: 700; font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+.plan-features li.off { color: var(--muted); }
+.plan-features li.off::before { content: '–'; color: var(--muted); }
+.btn-plan { font-family: var(--cond); font-weight: 700; font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.75rem; border-radius: 7px; text-decoration: none; display: block; text-align: center; transition: all .2s; width: 100%; }
+.btn-plan-ghost { border: 1px solid var(--border2); color: var(--dim); }
+.btn-plan-ghost:hover { border-color: rgba(139,92,246,0.4); color: var(--purple-l); }
+.btn-plan-primary { background: var(--purple-g); color: #fff; border: none; }
+.btn-plan-primary:hover { filter: brightness(1.1); }
+.pricing-note { text-align: center; font-family: var(--mono); font-size: 10.5px; color: var(--muted); margin-top: 1.5rem; letter-spacing: 0.05em; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 8px; margin-top: 3rem; }
+.faq-item { background: var(--bg1); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; font-family: var(--cond); font-weight: 600; font-size: 1rem; letter-spacing: 0.02em; color: var(--text); background: none; border: none; cursor: pointer; text-align: left; gap: 1rem; transition: background .15s; }
+.faq-q:hover { background: var(--bg2); }
+.faq-icon { font-size: 20px; color: var(--purple); flex-shrink: 0; transition: transform .25s; line-height: 1; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .25s; padding: 0 1.5rem; color: var(--dim); font-size: 0.9rem; line-height: 1.75; font-weight: 300; }
+.faq-item.open .faq-a { max-height: 300px; padding: 0 1.5rem 1.25rem; }
+
+/* FOOTER */
+.footer-full { position: relative; z-index: 1; border-top: 1px solid var(--border); background: var(--bg1); padding: 3rem 2.5rem 2rem; }
+.footer-grid { max-width: 1100px; margin: 0 auto 3rem; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
+.footer-brand p { color: var(--muted); font-size: 0.875rem; font-weight: 300; line-height: 1.7; margin-top: 1rem; max-width: 280px; }
+.footer-col-title { font-family: var(--cond); font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 1rem; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-links a { color: var(--muted); font-size: 0.875rem; text-decoration: none; font-weight: 300; transition: color .15s; }
+.footer-links a:hover { color: var(--purple-l); }
+.footer-bottom { max-width: 1100px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.footer-copy { font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+
+@media (max-width: 768px) {
+  nav { padding: 0 1.25rem; }
+  .modes-grid, .targets-grid, .pricing-grid { grid-template-columns: 1fr; }
+  .preview-body { grid-template-columns: 1fr; }
+  .preview-nav { display: none; }
+  .stats-row { flex-wrap: wrap; }
+  .stat-item { min-width: 50%; border-bottom: 1px solid var(--border); }
+  .cta-inner { padding: 2.5rem 1.5rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="landing.html" class="logo"><span class="logo-mark">◈</span> AgentCompany</a>
+  <div class="nav-right">
+    <a href="#how" class="nav-link">How it works</a>
+    <a href="#who" class="nav-link">Who it's for</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+    <a href="auth.html" class="btn-nav">Login / Sign up</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">
+    <span class="badge-dot"></span>
+    Launching soon · Powered by OpenAI
+  </div>
+  <h1>Your Business.<br><span class="grad">Fully Automated.</span></h1>
+  <p class="hero-sub">AgentCompany is a digital workforce that builds and runs your operations — from websites and apps to daily reports and data processing. Zero code required.</p>
+  <div class="hero-btns">
+    <a href="auth.html" class="btn-primary">Get early access</a>
+    <a href="#how" class="btn-ghost">See how it works ↓</a>
+  </div>
+
+  <!-- Dashboard preview -->
+  <div class="preview-wrap">
+    <div class="preview-bar">
+      <div class="preview-dots">
+        <span class="d1"></span><span class="d2"></span><span class="d3"></span>
+      </div>
+      <div class="preview-title">AgentCompany — CEO Chat</div>
+    </div>
+    <div class="preview-body">
+      <div class="preview-nav">
+        <div class="pnav-group">Overview</div>
+        <div class="pnav-item active">💬 CEO Chat</div>
+        <div class="pnav-item">📡 Live Feed</div>
+        <div class="pnav-group">Structure</div>
+        <div class="pnav-item">🏢 Org Chart</div>
+        <div class="pnav-item">👥 Teams</div>
+        <div class="pnav-group">Control</div>
+        <div class="pnav-item">⚡ Terminal</div>
+        <div class="pnav-item">📥 Requests</div>
+      </div>
+      <div class="preview-main">
+        <div class="pmsg">
+          <div class="pmsg-avatar av-usr">DU</div>
+          <div class="pmsg-body">
+            <div class="pmsg-name" style="color:#e6e3f5">You</div>
+            <div class="pmsg-text">Build a website for my restaurant and send me every evening a summary of today's orders.</div>
+          </div>
+        </div>
+        <div class="pmsg">
+          <div class="pmsg-avatar av-ceo">CEO</div>
+          <div class="pmsg-body">
+            <div class="pmsg-name" style="color:#8b5cf6">CEO</div>
+            <div class="pmsg-text"><strong>Understood.</strong> I'm assigning this to the Web Team and the Reporting Team. The site will be live within minutes — the daily order summary will run automatically every evening at 20:00.</div>
+          </div>
+        </div>
+        <div class="pmsg">
+          <div class="pmsg-avatar av-mgr">MGR</div>
+          <div class="pmsg-body">
+            <div class="pmsg-name" style="color:#2dd4bf">Manager · Web</div>
+            <div class="pmsg-text">Worker-1 is building the restaurant site... <strong>deployment ready.</strong></div>
+          </div>
+        </div>
+        <div class="pmsg">
+          <div class="pmsg-avatar av-ceo">CEO</div>
+          <div class="pmsg-body">
+            <div class="pmsg-name" style="color:#8b5cf6">CEO</div>
+            <div class="pmsg-text">
+              <div class="typing"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-item">
+    <span class="stat-num">2</span>
+    <span class="stat-label">Core capabilities</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">24/7</span>
+    <span class="stat-label">Always-on automation</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">0</span>
+    <span class="stat-label">Lines of code needed</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">DACH</span>
+    <span class="stat-label">Primary market</span>
+  </div>
+</div>
+
+<section id="how">
+  <p class="section-tag">// how it works</p>
+  <h2>Create.<br>Then let it run.</h2>
+  <p class="section-desc">Two powerful modes that work together to fully automate your digital business operations.</p>
+  <div class="modes-grid">
+    <div class="mode-card create">
+      <div class="mode-icon">⚡</div>
+      <h3>Create</h3>
+      <p>AI builds your entire digital presence in the browser — live preview, automatic deployment. No developers needed.</p>
+      <ul class="feat-list">
+        <li>Websites & landing pages</li>
+        <li>Web apps & admin panels</li>
+        <li>Business software & tools</li>
+        <li>API integrations & dashboards</li>
+      </ul>
+    </div>
+    <div class="mode-card run">
+      <div class="mode-icon">🔄</div>
+      <h3>Run</h3>
+      <p>AI works in the background — continuously monitoring, processing, and reporting. 24 hours a day.</p>
+      <ul class="feat-list">
+        <li>Daily KPI reports & summaries</li>
+        <li>Order processing & alerts</li>
+        <li>Data monitoring & analysis</li>
+        <li>Automated recurring workflows</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="who">
+  <p class="section-tag">// who it's for</p>
+  <h2>Built for<br>every scale.</h2>
+  <p class="section-desc">From the local burger joint to BMW — AgentCompany adapts to any business size.</p>
+  <div class="targets-grid">
+    <div class="target-card">
+      <span class="target-num">01</span>
+      <h4>Private users</h4>
+      <p>Personal automation, simple digital tools, and AI-assisted workflows — built around your daily life.</p>
+    </div>
+    <div class="target-card">
+      <span class="target-num">02</span>
+      <h4>Small businesses</h4>
+      <p>Restaurants, shops, local services, and founders in the DACH region — get a digital team without the overhead.</p>
+    </div>
+    <div class="target-card">
+      <span class="target-num">03</span>
+      <h4>Enterprise</h4>
+      <p>Connect existing systems via API. Automated KPI reports, product insights, and operational overviews every morning.</p>
+    </div>
+  </div>
+  <div class="quote-box">
+    <div class="quote-mark">"</div>
+    <p>"Build me a website and send me every evening a summary of today's orders."<span class="quote-src">— A typical AgentCompany request from a restaurant owner in Munich</span></p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <p class="section-tag">// pricing</p>
+  <h2>Simple,<br>transparent pricing.</h2>
+  <p class="section-desc">Start free. Scale when you're ready. No hidden fees.</p>
+  <div class="pricing-grid">
+
+    <div class="plan-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">Free</div>
+      <div class="plan-period">Forever free · No credit card</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>1 active agent</li>
+        <li>CEO Chat access</li>
+        <li>5 automations / month</li>
+        <li>Community support</li>
+        <li class="off">Custom domains</li>
+        <li class="off">API access</li>
+        <li class="off">Priority support</li>
+      </ul>
+      <a href="auth.html" class="btn-plan btn-plan-ghost">Get started free</a>
+    </div>
+
+    <div class="plan-card popular">
+      <div class="plan-badge">Most popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price"><sup>€</sup>29</div>
+      <div class="plan-period">Per month · Cancel anytime</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Up to 10 agents</li>
+        <li>CEO + Manager + Worker teams</li>
+        <li>Unlimited automations</li>
+        <li>Custom domain hosting</li>
+        <li>Daily reports & summaries</li>
+        <li>Email support</li>
+        <li class="off">Dedicated account manager</li>
+      </ul>
+      <a href="auth.html" class="btn-plan btn-plan-primary">Start Pro trial</a>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price">Custom</div>
+      <div class="plan-period">Volume pricing · SLA included</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Unlimited agents & teams</li>
+        <li>Full API access</li>
+        <li>Custom integrations</li>
+        <li>White-label option</li>
+        <li>Dedicated account manager</li>
+        <li>Priority 24/7 support</li>
+        <li>On-premise deployment option</li>
+      </ul>
+      <a href="mailto:cray.berier@icloud.com" class="btn-plan btn-plan-ghost">Contact us</a>
+    </div>
+
+  </div>
+  <p class="pricing-note">All plans include end-to-end encryption · GDPR compliant · Hosted in EU</p>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <p class="section-tag">// faq</p>
+  <h2>Frequently asked<br>questions.</h2>
+  <p class="section-desc">Still not sure? Here are the most common questions.</p>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What exactly is AgentCompany?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">AgentCompany is an AI-powered digital workforce. You give it instructions in plain language — it builds websites, runs automations, generates reports, and manages recurring tasks automatically. Think of it as hiring a full team of digital workers, but at a fraction of the cost.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Do I need to know how to code?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Not at all. AgentCompany is built for people who want results without technical knowledge. You describe what you want in plain language — English or German — and the AI handles everything else.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How does the Create mode work?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">You describe what you need — a website, an admin panel, a booking tool — and the AI builds it live in your browser with a real-time preview. Once you approve it, it's automatically deployed and ready to use. No hosting setup required.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What can the Run mode automate?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Anything that repeats. Daily order summaries, weekly KPI reports, monitoring your data for anomalies, sending alerts when something changes, processing incoming requests — once you set it up, it runs automatically every day without you doing anything.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is my data safe?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes. All data is encrypted end-to-end and stored on EU-based servers. We are fully GDPR compliant. Your business data never leaves your account and is never used to train AI models.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Can I connect my existing tools?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes — Pro and Enterprise plans include API access so you can connect AgentCompany to your existing systems, databases, or third-party tools. Enterprise customers also get custom integrations built for their specific stack.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How do I get started?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Create a free account — no credit card required. You'll have immediate access to the CEO Chat where you can start giving instructions right away. The Starter plan is free forever, so you can take your time before upgrading.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="cta-bottom">
+  <div class="cta-inner">
+    <p class="section-tag">// early access</p>
+    <h2>Ready to<br>automate?</h2>
+    <p>We're launching soon. Create a free account to be one of the first.</p>
+    <a href="auth.html" class="btn-primary">Create free account</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer-full">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo"><span class="logo-mark">◈</span> AgentCompany</div>
+      <p>A digital workforce for businesses of any size. Build, automate, and grow — powered by AI.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <ul class="footer-links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#who">Who it's for</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="auth.html">Login</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="mailto:cray.berier@icloud.com">cray.berier@icloud.com</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Colin Berier · AgentCompany · All rights reserved</div>
+    <div class="footer-copy">GDPR compliant · Hosted in EU · Powered by OpenAI</div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+
+</body>
+</html>
